@@ -1,0 +1,9 @@
+@use "variables" as var;
+
+body{
+  $txt-color:red;
+  text-align: center;
+  color: var.$txt-color;
+  margin-top:60px;
+  background-color: var.$bodyBg;
+}
