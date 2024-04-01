@@ -1,155 +1,328 @@
 @use "variables" as var;
-@use "base" ;
+@use "base";
 @use "sass:color";
 
-$classnames: "-1","-2","-3","-4","-5","-6","-7";
-$cardbgcols: #E1A091,#E9E1BD,rgb(196, 255, 107),rgb(224, 188, 250),#EAE2C7,#B59981,#CCD7D9;
-$hovercardbgcols: darken(#E1A091,8),darken(#E9E1BD,8),rgb(132, 214, 9),rgb(199, 124, 252),darken(#EAE2C7,8),darken(#B59981,8),darken(#CCD7D9,8);
+$basepath: "/images/";
+$imgnames : "/images/interior_ref.jpg" "/images/exterior_ref.png" "/images/texture_ref.png" "/images/wallpapers_ref.png" "/images/waterproof_ref.jpg" "/images/woodpaint_ref.png" "/images/metalpaint_ref.png";
+$classnames: "-1", "-2", "-3", "-4", "-5", "-6", "-7";
+$cardbgcols: #E1A091, #E9E1BD, rgb(196, 255, 107), rgb(224, 188, 250), #EAE2C7, #B59981, #CCD7D9;
+$hovercardbgcols: darken(#E1A091, 8), darken(#E9E1BD, 8), rgb(132, 214, 9), rgb(199, 124, 252), darken(#EAE2C7, 8), darken(#B59981, 8), darken(#CCD7D9, 8);
 $textid: "-primary";
 
-.btn{
+.btn {
   cursor: var.$cp;
   color: var.$txt-color;
 }
 
-%align-text{
+%align-text {
   text-align: left;
 }
 
-.parent{
-    color: green;
-    background-color: var.$parentBg;
-    &>.sibling{
-      background-color: aquamarine;
-    }
-    .child{
-      color:blue;
-    }
+.parent {
+  color: green;
+  background-color: var.$parentBg;
+
+  &>.sibling {
+    background-color: aquamarine;
+  }
+
+  .child {
+    color: blue;
+  }
 }
 
-.child{
+.child {
   color: aqua;
 }
 
-@mixin message($bgcol:rgba(0,0,0,0.3), $txtcol:yellow, $idname:""){
+@mixin message($bgcol: rgba(0, 0, 0, 0.3), $txtcol: yellow, $idname: "") {
   color: $txtcol;
   font-size: 30px;
   font-weight: 600;
   background-color: $bgcol;
-  &:hover{
+
+  &:hover {
     background: red;
-  };
-  .msg#{$idname}{
+  }
+
+  ;
+
+  .msg#{$idname} {
     background-color: $bgcol;
   }
 }
 
-.msg{
-  @include message(rgba(255,255,255,0.3),rgb(156, 156, 224),"primary");
-  &:hover{
-    @include message(rgba(255,255,255,1),orange);
+.msg {
+  @include message(rgba(255, 255, 255, 0.3), rgb(156, 156, 224), "primary");
+
+  &:hover {
+    @include message(rgba(255, 255, 255, 1), orange);
   }
 }
-.msg#{$textid}{
-  @include message(blue,white)
+
+.msg#{$textid} {
+  @include message(blue, white)
 }
 
-@mixin info($idname:"",$bgcolor:red, $txtcolor:black){
-  .info#{$idname}{
+@mixin info($idname: "", $bgcolor: red, $txtcolor: black) {
+  .info#{$idname} {
     background-color: $bgcolor;
     color: $txtcolor;
   }
 }
 
 // @include message(greenyellow,black,'-secondary');
-@include info("-secondary",black, white);
-@include info("-teritiary",yellow, orange);
+@include info("-secondary", black, white);
+@include info("-teritiary", yellow, orange);
 
-@keyframes increaseWidth{
-  0% { width: calc(100% / 7);opacity: 0;background: white;}
-  100% {width: calc(100% / 7 + 280px);}
-}
-@keyframes slideImage{
-  0% { transform: translateX(200px);}
-  100% {transform: translateX(0px);}
+@keyframes increaseWidth {
+  0% {
+    width: calc(100% / 7);
+    opacity: 0;
+    background: white;
+  }
+
+  100% {
+    width: calc(100% / 7 + 280px);
+  }
 }
 
-.cards-wrapper{
+@keyframes hoverMoreButton {
+  100% {
+    transform: translateX(40%);
+  }
+}
+
+@keyframes changedesc {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  20% {
+    display: flex !important;
+    opacity: 0;
+  }
+
+  100% {
+    display: flex !important;
+    opacity: 1;
+  }
+}
+@keyframes titlepos{
+  0%{
+    top:80%;
+  }
+  100%{
+    top:0;
+  }
+}
+
+.cards-wrapper {
   display: flex;
-  width:100%;
+  width: 100%;
   // height: 600px;
-  border:1px solid rgba(0,0,0,0.3);
+  // border: 1px solid rgba(0, 0, 0, 0.3);
   background-color: transparent;
   overflow-x: auto;
+
   &::-webkit-scrollbar {
     display: none;
   }
-  @for $i from 1 through length($cardbgcols){
-    & .child-card#{nth($classnames,$i)} {
-      
-      position:relative;
-      @if $i==3{
-        background: url("/images/card_bgs/texture_bg.png");
-      };
-      @if $i==4{
-        background: url("/images/card_bgs/wallpaper_bg.png");
-      }
-      background-color: nth($cardbgcols,$i);
-      width: calc(100% / 7);
-      max-width: 300px;
-      overflow-x: hidden;
-      display: flex;
-      // flex-shrink: 0;
-      flex-direction: column;
-      justify-content:space-between;
-      border: 1px solid rgba(0,0,0,0.1);
+
+  & .child-card {
+    width: calc(100% / 7);
+    max-width: 300px;
+    overflow-x: hidden;
+    display: flex;
+    // flex-shrink: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    height: 100%;
+    height: 533px;
+    font-family: manrope;
+    background-size: cover;
+    &::-webkit-scrollbar{
+      display:none;
+    }
+    & .img-mask {
       height: 100%;
-      height: 533px;
-      font-family: manrope;
-      padding: 20px 17px;
-      & span::after{
-        content:"";
-      }
-      & .img#{nth($classnames,$i)}{
-        width: calc(100% / 7 + 256px);
-        height: 260px;
-      }
-      & span{
-        margin-top: auto;
-        & h2{
-          @extend %align-text;
-          font-weight:300 !important;
-          font-size:30px;
+      padding: 10px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      & .txt-wrapper {
+        @extend %align-text;
+        // margin-top: auto;
+        position: relative;
+
+        & span.heading {
+          color: white;
+          font-weight: 300 !important;
+          font-size: 30px;
           text-wrap: wrap;
-          margin-bottom:0;
+          position: absolute;
+          bottom:0;
+          transition: bottom 1s ease;
+        }
+
+        & .additional-txt {
+          display: none;
         }
       }
-      &:hover{
-        @extend %align-text;
-        animation-name: increaseWidth;
-        animation-duration:0.5s;
-        animation-fill-mode: forwards;
-        animation-timing-function: ease-in;
-        & span::after{
-          content: "This is the text that will be visible once you hover on the card";
-          font-size: 14px;
-          font-weight: 400;
-          margin-bottom: auto;
-        };
-        & span{
-          margin-top: 0;
-          margin-bottom:auto;
-          & h2{
-            margin-bottom:8px;
-            font-weight:300;
+    }
+
+    &:hover {
+      @extend %align-text;
+
+      @for $i from 1 through length($imgnames) {
+        &.card#{nth($classnames,$i)} {
+          background-image: url(nth($imgnames,$i)) !important;
+        }
+      }
+
+      animation-name: increaseWidth;
+      animation-duration:0.8s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in;
+      width: calc(100% / 7 + 280px);
+
+      & .img-mask {
+        background: rgba(0, 0, 0, 0.6);
+        color: rgba(255, 255, 255, 0.8);
+
+        & .txt-wrapper {
+          @extend %align-text;
+          & span.heading {
+            font-weight: 300;
             text-wrap: wrap;
+            
+            animation-name: titlepos ;
+            animation-duration: 1s ;
+            animation-delay: 1s;
+            animation-fill-mode: both;
+          }
+
+          & .additional-txt {
+            animation-name: changedesc;
+            animation-delay: 1s;
+            animation-duration: 3s;
+            animation-fill-mode: both !important;
+            margin-top: 50px;
+            opacity: 1;
+            display: flex;
+            flex-direction: column;
+            & .desc-txt {
+              margin-bottom: 20px;
+            }
+
+            & .explr-btn {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border-radius: 45px;
+              max-width: 150px;
+              padding: 7px 20px;
+              border: 1px solid white;
+              color: white;
+              background: transparent;
+
+              &:hover {
+                background-image: linear-gradient(180deg, #ffc63c, #ffa20c);
+                color: black;
+                border: none;
+                cursor: pointer;
+
+                & .material-symbols-outlined {
+                  animation-name: hoverMoreButton;
+                  animation-duration: 0.5s;
+                  animation-fill-mode: forwards;
+                }
+              }
+            }
           }
         }
-        width: calc(100% / 7 + 280px);
-        background-color: nth($hovercardbgcols,$i);
 
-      };
+        // & span::after{
+        //   content: "This is the text that will be visible once you hover on the card";
+        //   font-size: 14px;
+        //   font-weight: 400;
+        //   margin-bottom: auto;
+        // };
+      }
+
     }
-  }
-}
 
+    ;
+
+  }
+
+  // @for $i from 1 through length($cardbgcols){
+  //   & .child-card#{nth($classnames,$i)} {
+
+  //     position:relative;
+  //     @if $i==3{
+  //       background: url("/images/card_bgs/texture_bg.png");
+  //     };
+  //     @if $i==4{
+  //       background: url("/images/card_bgs/wallpaper_bg.png");
+  //     }
+  //     background-color: nth($cardbgcols,$i);
+  //     width: calc(100% / 7);
+  //     max-width: 300px;
+  //     overflow-x: hidden;
+  //     display: flex;
+  //     // flex-shrink: 0;
+  //     flex-direction: column;
+  //     justify-content:space-between;
+  //     border: 1px solid rgba(0,0,0,0.1);
+  //     height: 100%;
+  //     height: 533px;
+  //     font-family: manrope;
+  //     padding: 20px 17px;
+  //     & span::after{
+  //       content:"";
+  //     }
+  //     & .img#{nth($classnames,$i)}{
+  //       width: calc(100% / 7 + 256px);
+  //       height: 260px;
+  //     }
+  //     & span{
+  //       margin-top: auto;
+  //       & h2{
+  //         @extend %align-text;
+  //         font-weight:300 !important;
+  //         font-size:30px;
+  //         text-wrap: wrap;
+  //         margin-bottom:0;
+  //       }
+  //     }
+  //     &:hover{
+  //       @extend %align-text;
+  //       animation-name: increaseWidth;
+  //       animation-duration:0.5s;
+  //       animation-fill-mode: forwards;
+  //       animation-timing-function: ease-in;
+  //       & span::after{
+  //         content: "This is the text that will be visible once you hover on the card";
+  //         font-size: 14px;
+  //         font-weight: 400;
+  //         margin-bottom: auto;
+  //       };
+  //       & span{
+  //         margin-top: 0;
+  //         margin-bottom:auto;
+  //         & h2{
+  //           margin-bottom:8px;
+  //           font-weight:300;
+  //           text-wrap: wrap;
+  //         }
+  //       }
+  //       width: calc(100% / 7 + 280px);
+  //       background-color: nth($hovercardbgcols,$i);
+
+  //     };
+  //   }
+  // }
+}

@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Vite App</title>
   </head>
   <body>
@@ -27,6 +28,15 @@
     <p class="info-secondary">this is Secondary message styled with interpolation</p>
     <p class="info-teritiary">this is Teritiary message styled with interpolation</p>
     <div id="verticalAccordian"></div>
+    <div class="parent">
+      Parent Text which wraps the entire text
+      <p class="sibling">brother element</p>
+      <p class="child">This is child paragraph Text in which <span class="grand-child">This is span text</span></p>
+      <div class="another-child">
+        <span class="sibling">This is another span text representing sibling element</span>
+      </div>
+
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
